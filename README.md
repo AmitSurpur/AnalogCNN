@@ -90,11 +90,11 @@ The max pooling circuit performs down-sampling by retaining the maximum value wi
 
 #### Mathematical Formulation
 
-For inputs \( \{I_1, I_2, \dots, I_n\} \), the max pooling circuit outputs:
+For inputs $$\( \{I_1, I_2, \dots, I_n\} \)$$, the max pooling circuit outputs:
 
-\[
+$$\[
 I_{max} = \max(I_1, I_2, \dots, I_n)
-\]
+\]$$
 
 This reduces data while retaining essential features, making it a crucial component in CNNs.
 
@@ -107,11 +107,11 @@ The Rectified Linear Unit (ReLU) introduces non-linearity into the network by ze
 
 #### Mathematical Formulation
 
-For an input current \( I_{in} \), the output \( I_{out} \) is given by:
+For an input current $$\( I_{in} \)$$, the output $$\( I_{out} \)$$ is given by:
 
-\[
+$$\[
 I_{out} = \max(0, I_{in})
-\]
+\]$$
 
 ---
 
