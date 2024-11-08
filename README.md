@@ -23,10 +23,10 @@ In digital CNN accelerators, the multiply-and-accumulate (MAC) operations consum
 The DACs convert binary digital values to analog currents, essential for initiating the convolution operation. This project includes an 8-bit DAC multiplier and a 4-bit DAC multiplier to explore the trade-offs in precision and power consumption.
 
 **Schematic (8-bit DAC):**
-![8-bit Current Steering DAC](images/8bit_dac_schematic.png)
+![8-bit Current Steering DAC](8bit_dac.png)
 
 **Schematic (4-bit DAC):**
-![4-bit Current Steering DAC](images/4bit_dac_schematic.png)
+![4-bit Current Steering DAC](4bit_dac_waveform.png)
 
 #### Mathematical Formulation
 
