@@ -32,7 +32,7 @@ The DACs convert binary digital values to analog currents, essential for initiat
 
 For an \( n \)-bit DAC with a digital input \( D \) (in decimal) and reference current \( I_{ref} \), the output current \( I_{out} \) is given by:
 
-![I_out = (D / 2^n) * I_ref](images/dac_equation.svg)
+$$[I_out = (D / 2^n) * I_ref]$$(images/dac_equation.svg)
 
 - \( D \): Decimal representation of the binary input.
 - \( n \): Number of bits in the DAC.
