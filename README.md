@@ -1,4 +1,3 @@
-# AnalogCNN
 # Low Power Mixed Signal Design of CNN Operator for AI Acceleration
 
 ## Abstract
@@ -19,16 +18,19 @@ In digital CNN accelerators, the multiply-and-accumulate (MAC) operations consum
 
 ## 2. Circuit Design and Mathematical Formulation
 
-### 2.1 Current-Steering Digital-to-Analog Converter (DAC)
+### 2.1 Current-Steering Digital-to-Analog Converters (8-bit and 4-bit DACs)
 
-The DAC converts binary digital values to an analog current, essential for initiating the convolution operation. Here, an 8-bit current-steering DAC is implemented.
+The DACs convert binary digital values to analog currents, essential for initiating the convolution operation. This project includes an 8-bit DAC multiplier and a 4-bit DAC multiplier to explore the trade-offs in precision and power consumption.
 
-**Schematic:**
-![Current Steering DAC](images/dac_schematic.png)
+**Schematic (8-bit DAC):**
+![8-bit Current Steering DAC](images/8bit_dac_schematic.png)
+
+**Schematic (4-bit DAC):**
+![4-bit Current Steering DAC](images/4bit_dac_schematic.png)
 
 #### Mathematical Formulation
 
-For an \(n\)-bit DAC with a digital input \(D\) (in decimal) and reference current \(I_{ref}\), the output current \(I_{out}\) is:
+For an \( n \)-bit DAC with a digital input \( D \) (in decimal) and reference current \( I_{ref} \), the output current \( I_{out} \) is given by:
 
 ![I_out = (D / 2^n) * I_ref](images/dac_equation.svg)
 
@@ -36,33 +38,33 @@ For an \(n\)-bit DAC with a digital input \(D\) (in decimal) and reference curre
 - \( n \): Number of bits in the DAC.
 - \( I_{ref} \): Reference current.
 
-The DAC enables controlled current outputs necessary for analog computation, with each bit switch modulating current flow according to the input value.
+The 8-bit DAC provides higher precision, while the 4-bit DAC is more power-efficient, making it suitable for applications where lower precision is acceptable.
 
-### 2.2 Multiplier Circuit Using Current Mirrors
+**Waveform (8-bit DAC Output):**
+![8-bit DAC Waveform](images/8bit_dac_waveform.png)
 
-The multiplier circuit leverages current mirrors to multiply the DAC output current with another analog input. Here, precise scaling is achieved using transistor sizing in the current mirror.
+### 2.2 Multiplier Circuits for DACs
 
-**Schematic:**
-![Multiplier Circuit](images/multiplier_schematic.png)
+The multiplier circuit uses current mirrors to multiply the DAC output with another analog input. The circuit configuration allows precise scaling through transistor sizing, supporting both 8-bit and 4-bit multipliers.
+
+**Schematic (8-bit Multiplier):**
+![8-bit Multiplier Circuit](images/8bit_multiplier_schematic.png)
+
+**Schematic (4-bit Multiplier):**
+![4-bit Multiplier Circuit](images/4bit_multiplier_schematic.png)
 
 #### Mathematical Formulation
 
-The output current \( I_{out} \) of a current mirror-based multiplier depends on input currents \( I_{DAC} \) and \( I_{in} \), and on transistor ratios \( k_1 \) and \( k_2 \). For a basic analog multiplier, the output current can be represented by:
+The output current \( I_{out} \) of the multiplier circuit depends on the DAC output \( I_{DAC} \), an additional input current \( I_{in} \), and transistor ratios \( k_1 \) and \( k_2 \). For a general analog multiplier:
 
 ![I_out = k_1 * I_DAC * k_2 * I_in](images/multiplier_equation.svg)
 
 where:
-- \( k_1 \) and \( k_2 \) represent scaling factors based on the transistor width-to-length (W/L) ratios.
-- \( I_{DAC} \) is the input from the DAC.
-- \( I_{in} \) is another input current.
+- \( k_1 \) and \( k_2 \) represent scaling factors from transistor (W/L) ratios.
+- \( I_{DAC} \): DAC output current.
+- \( I_{in} \): Secondary input current.
 
-In practice, if \( I_{DAC} \) and \( I_{in} \) are independently controlled, then:
-
-\[
-I_{out} = k \cdot I_{DAC} \cdot I_{in}
-\]
-
-where \( k \) is a constant determined by the current mirror ratio. This output directly implements the product needed for CNN MAC operations.
+This output is directly proportional to the product of \( I_{DAC} \) and \( I_{in} \), implementing a multiplication operation in the analog domain.
 
 ### 2.3 Analog Integrator for Accumulation
 
@@ -77,7 +79,7 @@ For an integrator with capacitance \( C \) and input current \( I_{in} \), the o
 
 ![V_out(t) = (1 / C) * integral_0^t I_in dt + V_initial](images/integrator_equation.svg)
 
-where \( V_{initial} \) is the initial voltage across the capacitor. The integrator continuously sums the input current over time, providing a natural accumulation function.
+This formulation shows the continuous accumulation of input current over time, providing the summation needed in MAC operations.
 
 ### 2.4 Max Pooling Circuit
 
@@ -88,69 +90,70 @@ The max pooling circuit performs down-sampling by retaining the maximum value wi
 
 #### Mathematical Formulation
 
-Given a set of input currents \( \{I_1, I_2, \dots, I_n\} \), the max pooling circuit outputs the largest current, implementing the maximum function directly in hardware:
+For inputs \( \{I_1, I_2, \dots, I_n\} \), the max pooling circuit outputs:
 
 \[
 I_{max} = \max(I_1, I_2, \dots, I_n)
 \]
 
-This non-linear operation reduces data dimensionality while retaining important features, critical in CNNs for focusing on high-activation regions.
+This reduces data while retaining essential features, making it a crucial component in CNNs.
 
 ### 2.5 ReLU Circuit for Activation Function
 
-The Rectified Linear Unit (ReLU) is implemented in analog form to introduce non-linearity into the network. The ReLU circuit blocks negative currents and outputs zero, while allowing positive currents to pass.
+The Rectified Linear Unit (ReLU) introduces non-linearity into the network by zeroing out negative values while allowing positive values to pass.
 
 **Schematic:**
 ![ReLU Circuit](images/relu_schematic.png)
 
 #### Mathematical Formulation
 
-For an input current \( I_{in} \), the output current \( I_{out} \) of the ReLU circuit is defined as:
+For an input current \( I_{in} \), the output \( I_{out} \) is given by:
 
 \[
 I_{out} = \max(0, I_{in})
 \]
 
-This function introduces non-linearity, enabling the CNN to model complex patterns and relationships within data.
-
 ---
 
 ## 3. Simulation Results
 
-Simulations were conducted using Xschem to verify each circuit’s performance. The following subsections present the schematics and waveform results for each component:
+### 3.1 8-bit DAC Waveform
 
-### 3.1 Multiply and Accumulate Circuit Simulation
+**Waveform:**
+![8-bit DAC Waveform](images/8bit_dac_waveform.png)
 
-**Schematic and Waveform:**
-![Multiply and Accumulate Circuit](images/mac_schematic.png)
-![MAC Waveform](images/mac_waveform.png)
+The waveform shows accurate digital-to-analog conversion for the 8-bit DAC, reflecting high precision.
 
-### 3.2 DAC Simulation
+### 3.2 Multiplier Circuit Waveforms
 
-**Schematic and Waveform:**
-![DAC Schematic](images/dac_schematic.png)
-![DAC Waveform](images/dac_waveform.png)
+**8-bit Multiplier Waveform:**
+![8-bit Multiplier Waveform](images/8bit_multiplier_waveform.png)
+
+**4-bit Multiplier Waveform:**
+![4-bit Multiplier Waveform](images/4bit_multiplier_waveform.png)
+
+These waveforms validate the accuracy and functionality of the multiplier circuits for both the 8-bit and 4-bit configurations.
 
 ### 3.3 ReLU Circuit Simulation
 
-**Schematic and Waveform:**
-![ReLU Schematic](images/relu_schematic.png)
+**Waveform:**
 ![ReLU Waveform](images/relu_waveform.png)
 
-### 3.4 Max Pooling Simulation
+The ReLU waveform shows that the circuit accurately outputs zero for negative inputs and allows positive currents to pass.
 
-**Schematic and Waveform:**
-![Max Pooling Schematic](images/max_pooling_schematic.png)
+### 3.4 Max Pooling Circuit Simulation
+
+**Waveform:**
 ![Max Pooling Waveform](images/max_pooling_waveform.png)
 
 ---
 
 ## 4. Conclusion and Future Work
 
-This analog accelerator design achieves efficient MAC operations for CNNs in a resource-constrained setting. Through analog implementation, the design offers reduced power consumption and latency compared to digital counterparts. Future work will include:
-- Optimizing component sizes for further power efficiency.
-- Expanding the circuit to support multi-channel convolutions.
-- Evaluating performance with larger datasets and in diverse embedded environments.
+This analog accelerator design provides efficient MAC operations for CNNs in resource-constrained environments. Through analog implementation, the design reduces power consumption and latency. Future improvements include:
+- Component optimization for power and speed.
+- Support for multi-channel convolutions.
+- Expanded testing with diverse embedded applications.
 
 ---
 
