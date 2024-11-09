@@ -1,4 +1,4 @@
-# Low Power Mixed Signal Design of CNN Operator for AI Acceleration
+# Multiply and Accumulate operations in Analog for AI Acceleration
 
 ## Abstract
 
