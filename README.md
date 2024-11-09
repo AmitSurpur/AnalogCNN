@@ -104,7 +104,7 @@ This reduces data while retaining essential features, making it a crucial compon
 The Rectified Linear Unit (ReLU) introduces non-linearity into the network by zeroing out negative values while allowing positive values to pass.
 
 **Schematic:**
-![ReLU Circuit](images/relu_schematic.png)
+![ReLU Circuit](ReLU.png)
 
 #### Mathematical Formulation
 
@@ -121,24 +121,24 @@ I_{out} = \max(0, I_{in})
 ### 3.1 8-bit DAC Waveform
 
 **Waveform:**
-![8-bit DAC Waveform](images/8bit_dac_waveform.png)
+![8-bit DAC Waveform](8bit_dac_waveform.png)
 
 The waveform shows accurate digital-to-analog conversion for the 8-bit DAC, reflecting high precision.
 
 ### 3.2 Multiplier Circuit Waveforms
 
 **8-bit Multiplier Waveform:**
-![8-bit Multiplier Waveform](images/8bit_multiplier_waveform.png)
+![8-bit Multiplier Waveform](8bit_multiplier_waveform.png)
 
 **4-bit Multiplier Waveform:**
-![4-bit Multiplier Waveform](images/4bit_multiplier_waveform.png)
+![4-bit Multiplier Waveform](4bit_multiplier_waveform.png)
 
 These waveforms validate the accuracy and functionality of the multiplier circuits for both the 8-bit and 4-bit configurations.
 
 ### 3.3 ReLU Circuit Simulation
 
 **Waveform:**
-![ReLU Waveform](images/relu_waveform.png)
+![ReLU Waveform](ReLU.png)
 
 The ReLU waveform shows that the circuit accurately outputs zero for negative inputs and allows positive currents to pass.
 
