@@ -12,7 +12,7 @@ The growth of AI and deep learning has amplified the demand for high-performance
 
 ### Problem Statement
 
-In digital CNN accelerators, the multiply-and-accumulate (MAC) operations consume considerable power and introduce latency due to digital-to-analog (D/A) and analog-to-digital (A/D) conversions. Analog circuits, by contrast, can perform these operations directly with minimal energy consumption and without the need for digital representation, potentially providing real-time inference with lower power consumption.
+In digital CNN accelerators, the multiply-and-accumulate (MAC) operations consume considerable power. Analog circuits, by contrast, can perform these operations directly with minimal energy consumption and without the need for digital representation, potentially providing real-time inference with lower power consumption.
 
 ---
 
@@ -20,7 +20,7 @@ In digital CNN accelerators, the multiply-and-accumulate (MAC) operations consum
 
 ### 2.1 Current-Steering Digital-to-Analog Converters (8-bit and 4-bit DACs)
 
-The DACs convert binary digital values to analog currents, essential for initiating the convolution operation. This project includes an 8-bit DAC multiplier and a 4-bit DAC multiplier to explore the trade-offs in precision and power consumption.
+The DACs convert binary digital values to analog currents, essential for initiating the convolution operation. This project includes an 8-bit DAC multiplier testing and a 4-bit DAC multiplier testing to explore the trade-offs in precision and power consumption.
 
 **Schematic (8-bit Current Steering DAC):**
 ![8-bit Current Steering DAC](8bit_dac.png)
