@@ -41,8 +41,8 @@ $$[I_{out} = (D / 2^n) * I_{ref}]$$(images/dac_equation.svg)
 The 8-bit DAC provides higher precision, while the 4-bit DAC is more power-efficient, making it suitable for applications where lower precision is acceptable.
 
 **Waveform (8-bit DAC Output):**
+![8-bit DAC Waveform](images/8bit_dac_tb.png)
 ![8-bit DAC Waveform](images/8bit_dac_waveform.png)
-
 ### 2.2 Multiplier Circuits for DACs
 
 The multiplier circuit uses current mirrors to multiply the DAC output with another analog input. The circuit configuration allows precise scaling through transistor sizing, supporting both 8-bit and 4-bit multipliers.
